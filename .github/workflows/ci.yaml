@@ -50,6 +50,7 @@ jobs:
     needs: build-and-push
     if: always()
     runs-on: ubuntu-latest
+    environment: dev_telegram_notifications
     steps:
       - name: Send positive Telegram notification
         if: needs.build-and-push.result == 'success'
