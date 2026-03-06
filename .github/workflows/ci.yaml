@@ -45,3 +45,24 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/task-manager:${{ github.sha }}
+  
+  notify:
+    needs: build-and-push
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send positive Telegram notification
+        if: needs.build-and-push.result == 'success'
+        run: |
+          curl -s -X POST \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="✅ ${{ github.actor }} → ${{ github.repository }} успешно задеплоен"
+
+      - name: Send negative Telegram notification
+        if: needs.build-and-push.result == 'failure'
+        run: |
+          curl -s -X POST \
+            https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="❌ ${{ github.actor }} → ${{ github.repository }} упал!"
