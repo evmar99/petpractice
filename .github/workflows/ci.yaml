@@ -45,8 +45,8 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/task-manager:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/task-manager:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/task-manager:latest
   
   notify:
     needs: build-and-push

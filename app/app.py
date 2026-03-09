@@ -12,7 +12,10 @@ def get_tasks():
 
 @app.route('/health', methods=['GET'])
 def health():
-    return jsonify({"status": "ok"})
+    return jsonify({
+        "status": "ok",
+        "hostname": os.environ.get('HOSTNAME', 'unknown')
+        })
 
 
 if __name__ == '__main__':
