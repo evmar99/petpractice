@@ -72,8 +72,8 @@ jobs:
 
       - name: Send negative Telegram notification
         if: |
-          needs.lint.result == 'failure' &&
-          needs.test.result == 'failure' &&
+          needs.lint.result == 'failure' ||
+          needs.test.result == 'failure' ||
           needs.build-and-push.result == 'failure'
         run: |
           curl -s -X POST \
