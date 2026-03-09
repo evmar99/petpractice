@@ -57,7 +57,10 @@ jobs:
     environment: dev_telegram_notifications
     steps:
       - name: Send positive Telegram notification
-        if: success()
+        if: |
+          needs.lint.result == 'success' &&
+          needs.test.result == 'success' &&
+          needs.build-and-push.result == 'success'
         run: |
           curl -s -X POST \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
@@ -68,7 +71,10 @@ jobs:
             Успешно задеплоен!"
 
       - name: Send negative Telegram notification
-        if: failure()
+        if: |
+          needs.lint.result == 'failure' &&
+          needs.test.result == 'failure' &&
+          needs.build-and-push.result == 'failure'
         run: |
           curl -s -X POST \
             https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
