@@ -1,0 +1,16 @@
+---
+- name: Pull Docker image
+  community.docker.docker_image:
+    name: "{{ image_name }}"
+    source: pull
+    force_source: true
+  notify: Restart container
+
+- name: Run container
+  community.docker.docker_container:
+    name: "{{ container_name }}"
+    image: "{{ image_name }}"
+    state: started
+    restart_policy: always
+    ports:
+      - "{{ app_port }}:5000"

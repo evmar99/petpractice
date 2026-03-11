@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: task-manager
+  name: task-manager
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: task-manager
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: task-manager
+    spec:
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        name: task-manager
+        ports:
+          - containerPort: {{ .Values.containerPort }}
+        envFrom:
+          - configMapRef:
+              name: task-manager-config
+          - secretRef:
+              name: task-manager-secret
+        resources: {}

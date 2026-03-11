@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  APP_ENV: {{ .Values.config.appEnv }}
+  APP_PORT: "{{ .Values.config.appPort }}"
+kind: ConfigMap
+metadata:
+  name: task-manager-config

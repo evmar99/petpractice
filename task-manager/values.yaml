@@ -1,0 +1,18 @@
+replicaCount: 3
+containerPort: 5000 
+
+image:
+  repository: evmar93/task-manager
+  tag: latest
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 5000
+
+ingress:
+  host: task-manager.local
+
+config:
+  appEnv: development
+  appPort: "5000"

@@ -1,0 +1,7 @@
+---
+- name: Deploy Task Manager
+  hosts: webservers
+  become: true
+
+  roles:
+    - task_manager

@@ -1,0 +1,3 @@
+image_name: evmar93/task-manager
+container_name: task-manager
+app_port: 5000
